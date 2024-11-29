@@ -1,5 +1,7 @@
+import { Request } from 'express'
 import User from '../models/user'
 import validator from 'validator'
+import { json } from 'sequelize'
 
 export default class validateUser{
   async createUser(data:any): Promise<string[]>{
@@ -27,4 +29,18 @@ export default class validateUser{
     }
     return errors
   }
+
+  static async getAll(req: any, res:any) {
+    try{
+      const getUserAll: User[] = await User.findAll({
+        attributes: ['id','firstName','lastName', 'email', 'permissions']
+      })
+
+      return res.json(getUserAll)
+    }catch(error){
+      console.error('Errro ao pegar todos os usuarios do banco')
+      return res.status(500).json({error: 'Erro interno no servidor'})
+    }
+  }
+
 }
