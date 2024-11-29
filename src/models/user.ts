@@ -1,14 +1,16 @@
 import { Model, DataTypes, Sequelize } from 'sequelize';
 import { IUser } from '../interface/IUser';
 import bcryptjs from 'bcryptjs'
+import { IUserPermissions } from '../interface/IPermissions';
 
 class User extends Model<IUser> implements IUser{
-  public id?: number | undefined;
+  public id!: number | undefined;
   public firstName!: string;
   public lastName!: string;
   public email!: string;
   public password_hash!: string;
   public password?: string | undefined;
+  public permissions!: IUserPermissions;
 
 
   static initialize (sequelize: Sequelize){
@@ -40,6 +42,21 @@ class User extends Model<IUser> implements IUser{
           validate: {
             len: [6, 50]
           },
+        },
+        permissions:{
+          type: DataTypes.JSON,
+          allowNull: false,
+          defaultValue:{
+            general: {canDeleteUsers: false, canEditUsers: false},
+            self:{canDeleteOwnAccount: true, canEditOwnAccount: true}
+          },
+          get(){
+            const rawValue = this.getDataValue('permissions')
+            return typeof rawValue === 'string' ? JSON.parse(rawValue) : rawValue
+          },
+          set(value : IUserPermissions){
+            this.setDataValue('permissions', value)
+          }
         }
       },
       {

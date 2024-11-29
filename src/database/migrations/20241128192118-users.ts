@@ -24,15 +24,21 @@ module.exports = {
       password_hash: {
         type: DataTypes.STRING(255),
         allowNull: false
-      },      createdAt: {
+      },
+      permissions:{
+        type: DataTypes.JSON, 
+        allowNull: true,      
+        defaultValue: {}   
+      } ,     
+      createdAt: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: DataTypes.NOW, // Usando o valor padrão do Sequelize
+        defaultValue: DataTypes.NOW, 
       },
       updatedAt: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: DataTypes.NOW, // Usando o valor padrão do Sequelize
+        defaultValue: DataTypes.NOW, 
       },
     });  
   },
