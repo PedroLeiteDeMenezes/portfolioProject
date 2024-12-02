@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import User from '../models/user';
 import validateUser from '../validations/User';
 import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
 
 class Usercontroller {
   public static async post(req:Request, res: Response): Promise<any>{
@@ -40,6 +41,21 @@ class Usercontroller {
     }
   }
 
+  static async login(req:Request, res: Response):Promise<any>{
+    const {email, password} = req.body
+
+    const validator = new validateUser
+    const {errors, user} = await validator.loginValidate({email, password});
+    if(errors.length > 0){
+      return res.status(401).json({errors})
+    }
+
+    const token = jwt.sign({id: user.id, email: user.email}, process.env.TOKEN_SECRET ?? '', {
+      expiresIn: '1h'
+    })
+
+    return res.json({token})
+  }
 
 }
 export default Usercontroller

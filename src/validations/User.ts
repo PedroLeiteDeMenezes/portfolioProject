@@ -4,6 +4,15 @@ import validator from 'validator'
 import { json } from 'sequelize'
 
 export default class validateUser{
+  private async userExist(data:any) {
+    const errors: string[] = []
+    const userExist = await User.findOne({ where: { email: data.email } });
+    if(userExist){
+      errors.push('Um usuario com este email já existe em nosso banco de dados')
+    }
+    return errors
+  }
+
   async createUser(data:any): Promise<string[]>{
     const errors: string[] = []
     
@@ -23,10 +32,9 @@ export default class validateUser{
       errors.push('A senha precisa ter 6 characters ou mais')
     }
 
-    const userExist = await User.findOne({ where: { email: data.email } });
-    if(userExist){
-      errors.push('Um usuario com este email já existe em nosso banco de dados')
-    }
+    const userErrors = await this.userExist(data)
+    errors.push(...userErrors)
+
     return errors
   }
 
@@ -43,4 +51,19 @@ export default class validateUser{
     }
   }
 
+  async loginValidate(data:any): Promise<{errors:string []; user:any}>{
+    const errors: string[] = []
+    const {email, password} = data
+
+    if(!password){
+      errors.push('Senha ou email invalidos')
+    }
+
+    const user = await User.findOne({where: {email: email}})
+    if(!user){
+      errors.push('Email ou senha invalidos')
+    }
+    
+    return{errors, user}
+  }
 }
