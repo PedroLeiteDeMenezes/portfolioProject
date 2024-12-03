@@ -1,4 +1,4 @@
-import { Request } from 'express'
+import { Request, Response } from 'express'
 import User from '../models/user'
 import validator from 'validator'
 import { json } from 'sequelize'
@@ -65,5 +65,20 @@ export default class validateUser{
     }
     
     return{errors, user}
+  }
+
+  async delete(req:Request, res:Response){
+    const errors: string[] = []
+    const userId = req.params.id
+
+    console.log(`Requisição para deletar o usuario com id: ${userId}`);
+    
+    const user = await User.findByPk(userId)
+    if(!user){
+      return res.status(404).json({error: 'User not found'})
+    }
+
+    await user.destroy()
+    return res.json({message: `Usuario with id ${userId} deletado com sucesso`})
   }
 }

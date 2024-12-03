@@ -57,5 +57,15 @@ class Usercontroller {
     return res.json({token})
   }
 
+  static async delete(req:Request, res:Response):Promise<any>{
+    try{
+      const validator = new validateUser
+      await validator.delete(req, res)
+    }catch(error){
+      console.log(`Erro ao deletar o usuario ${error}`);
+      return res.status(500).json({error: 'Erro interno do servidor'})
+    }
+  }
+
 }
 export default Usercontroller
