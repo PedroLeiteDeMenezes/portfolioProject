@@ -67,5 +67,26 @@ class Usercontroller {
     }
   }
 
+  static async getId(req:Request, res:Response):Promise<any>{
+    try{
+      const userId = req.params.id
+      const getUser = new validateUser
+      const user = await getUser.getUserId(userId)
+  
+      if(!user){
+        return res.status(404).json({message: 'Usuario não encontrado'})
+      }
+  
+      return res.json(user)
+    }catch(error){
+      console.log('Erro ao pegar o usuario pelo id', error);
+      return res.status(500).json({error: 'Erro interno no servidor'})
+    }
+  }
+
+  static async put(req: Request, res: Response):Promise<any>{
+    const validate = new validateUser
+    await validate.update(req, res)
+  }
 }
 export default Usercontroller

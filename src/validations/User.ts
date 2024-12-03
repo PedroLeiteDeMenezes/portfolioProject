@@ -81,4 +81,29 @@ export default class validateUser{
     await user.destroy()
     return res.json({message: `Usuario with id ${userId} deletado com sucesso`})
   }
+
+  async getUserId(userId: string):Promise<User | null>{
+    try{
+      const getUser = await User.findByPk(userId);
+      if(!getUser){
+        return null
+      }
+      return getUser
+    }catch(error){
+      console.log(`Erro ao pegar o usuario: ${error}`);
+      throw new Error('Erro interno no servidor')
+    }
+  }
+
+  async update(req:Request, res:Response){
+    const userId = req.params.id
+    console.log(`Usuario com id ${userId} indo para edição`);
+    
+    const user = await User.findByPk(userId)
+    if(!user){
+      return res.status(404).json({error: 'Usuario não encontrado'})
+    }
+    const userUpdate = await user.update(req.body)
+    return res.json(userUpdate)
+  }
 }
