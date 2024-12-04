@@ -1,8 +1,12 @@
 import express from 'express';
 import { Sequelize } from 'sequelize';
 import dotenv from 'dotenv';
+
 import User from './models/user';
+import Product from './models/product';
+
 import userRoute from './routes/userRoute';
+import productRoute from './routes/productRoute'
 
 dotenv.config();
 
@@ -29,12 +33,14 @@ sequelize.authenticate()
 
 
 User.initialize(sequelize);
+Product.initialize(sequelize)
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
 app.use('/users', userRoute)
+app.use('/product', productRoute)
 
 app.listen(PORT, () => {
   console.log(`Servidor escutando na porta ${PORT}`);
