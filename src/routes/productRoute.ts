@@ -10,5 +10,5 @@ const router = Router()
 
 router.post('/', loginRequired.required, checkUserPermission.checkEditProduct ,ProductController.post)
 router.get('/', loginRequired.required, checkUserPermission.checkEditProduct, ProductController.getAll)
-
+router.put('/:id', loginRequired.required, checkUserPermission.check, ProductController.put)
 export default router

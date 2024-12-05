@@ -37,4 +37,17 @@ export default class validateProduct{
       return res.status(500).json({error: 'Erro interno do servidor'})
     }
   }
+
+  async update(req: Request, res:Response){
+    const productId = req.params.id
+
+    const product = await Product.findByPk(productId)
+
+    if(!product){
+      return res.status(404).json({error: 'Produto com esse id não existe no nosso banco de dados'})
+    }
+
+    const productUpdated = await product.update(req.body)
+    return res.json(productUpdated)
+  }
 }

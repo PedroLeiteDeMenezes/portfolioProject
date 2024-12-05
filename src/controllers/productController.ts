@@ -30,5 +30,10 @@ class ProductController{
   public static async getAll(req:Request, res:Response){
     await validateProduct.getAll(req, res)
   }
+
+  public static async put(req:Request, res:Response){
+    const validate = new validateProduct
+    await validate.update(req, res)
+  }
 }
 export default ProductController
