@@ -50,4 +50,16 @@ export default class validateProduct{
     const productUpdated = await product.update(req.body)
     return res.json(productUpdated)
   }
+
+  async delete(req:Request, res:Response){
+    const productId = req.params.id
+
+    const product = await Product.findByPk(productId)
+    if(!product){
+      return res.status(404).json({error: 'Produto não encontrado'})
+    }
+
+    await product.destroy()
+    return res.json({message: `Produto com o id ${productId} deletado com sucesso`})
+  }
 }

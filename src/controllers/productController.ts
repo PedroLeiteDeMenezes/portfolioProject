@@ -35,5 +35,10 @@ class ProductController{
     const validate = new validateProduct
     await validate.update(req, res)
   }
+
+  public static async delete(req:Request, res:Response){
+    const validator = new validateProduct
+    await validator.delete(req, res)
+  }
 }
 export default ProductController

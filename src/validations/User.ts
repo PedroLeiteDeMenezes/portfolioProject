@@ -79,7 +79,7 @@ export default class validateUser{
     }
 
     await user.destroy()
-    return res.json({message: `Usuario with id ${userId} deletado com sucesso`})
+    return res.json({message: `Usuario com id ${userId} deletado com sucesso`})
   }
 
   async getUserId(userId: string):Promise<User | null>{
