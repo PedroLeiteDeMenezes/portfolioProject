@@ -24,4 +24,17 @@ export default class validateProduct{
 
     return errors
   }
+
+  static async getAll(req:Request, res:Response){
+    try{
+      const getProductAll: Product[] = await Product.findAll({
+        attributes: ['id', 'name', 'description', 'preco', 'image']
+      })
+  
+      return res.json(getProductAll)
+    }catch(error){
+      console.error('Erro ao pegar todos os produtos do banco de dados')
+      return res.status(500).json({error: 'Erro interno do servidor'})
+    }
+  }
 }

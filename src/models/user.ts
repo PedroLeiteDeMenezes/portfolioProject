@@ -47,7 +47,7 @@ class User extends Model<IUser> implements IUser{
           type: DataTypes.JSON,
           allowNull: false,
           defaultValue:{
-            general: {canDeleteUsers: false, canEditUsers: false},
+            general: {canDeleteUsers: false, canEditUsers: false, canEditProduct: false},
             self:{canDeleteOwnAccount: true, canEditOwnAccount: true}
           },
           get(){

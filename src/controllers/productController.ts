@@ -26,5 +26,9 @@ class ProductController{
       res.status(500).json({error: error.message})
     }
   }
+
+  public static async getAll(req:Request, res:Response){
+    await validateProduct.getAll(req, res)
+  }
 }
 export default ProductController

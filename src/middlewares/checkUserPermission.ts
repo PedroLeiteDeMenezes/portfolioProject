@@ -23,4 +23,22 @@ export class checkUserPermission{
 
     next()
   }
+
+  static async checkEditProduct(req:Request, res:Response, next: NextFunction):Promise<any> {
+    const userId = req.userId
+
+    const user : User | null = await User.findByPk(userId)
+
+    if(!user){
+      return res.status(404).json({error: 'User not found'})
+    }
+
+    const canEditProduct = user.permissions?.general?.canEditProduct
+
+    if(!canEditProduct){
+      return res.status(403).json({error: 'Você não tem permissão para editar ou mexer em produtos'})
+    }
+
+    next()
+  }
 }
