@@ -62,4 +62,19 @@ export default class validateProduct{
     await product.destroy()
     return res.json({message: `Produto com o id ${productId} deletado com sucesso`})
   }
+
+  async getproductId(productId: string){
+    try{
+      const getProduct = await Product.findByPk(productId)
+      
+      if(!getProduct){
+        return null
+      }
+
+      return getProduct
+    }catch(error){
+      console.log(`Erro ao pegar o produto ${error}`);
+      throw new Error('Erro interno no servidor')
+    }
+  }
 }
