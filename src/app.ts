@@ -7,6 +7,10 @@ import Product from './models/product';
 
 import userRoute from './routes/userRoute';
 import productRoute from './routes/productRoute'
+import orderRoute from './routes/orderRoute'
+
+import {Models} from '../src/types/models'
+import Order from './models/order';
 
 dotenv.config();
 
@@ -24,6 +28,23 @@ const sequelize = new Sequelize(
   }
 );
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+
+User.initialize(sequelize);
+Order.initialize(sequelize)
+Product.initialize(sequelize)
+
+const models: Models = {
+  User: User,
+  Order: Order,
+}
+
+User.associate(models)
+Order.associate(models)
+
+
 sequelize.authenticate()
 .then(() => {
   console.log('Banco de dados sincronizado!');
@@ -31,16 +52,9 @@ sequelize.authenticate()
   console.error('Erro ao sincronizar o banco de dados:', err);
 });
 
-
-User.initialize(sequelize);
-Product.initialize(sequelize)
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-
 app.use('/users', userRoute)
 app.use('/product', productRoute)
+app.use('/order', orderRoute)
 
 app.listen(PORT, () => {
   console.log(`Servidor escutando na porta ${PORT}`);

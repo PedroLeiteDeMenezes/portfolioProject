@@ -3,6 +3,8 @@ import { IUser } from '../interface/IUser';
 import bcryptjs from 'bcryptjs'
 import { IUserPermissions } from '../interface/IPermissions';
 
+import { Models } from '../types/models';
+
 class User extends Model<IUser> implements IUser{
   public id!: number | undefined;
   public firstName!: string;
@@ -12,6 +14,12 @@ class User extends Model<IUser> implements IUser{
   public password?: string | undefined;
   public permissions!: IUserPermissions;
 
+  static associate(models: Models): void {
+    this.hasMany(models.Order, {
+      foreignKey: 'userId',
+      as: 'orders'
+    })
+  }
 
   static initialize (sequelize: Sequelize){
     User.init(
