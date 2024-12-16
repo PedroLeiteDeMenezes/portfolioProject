@@ -19,7 +19,7 @@ class OrderController{
         status: String(status)
       })
 
-      return res.status(400).json(createOrder)
+      return res.json(createOrder)
     }catch(error: any){
       return res.status(400).json({error: error.message})
     }

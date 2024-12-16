@@ -1,5 +1,6 @@
 import { Model, DataTypes, Sequelize } from 'sequelize';
 import { IProduct } from '../interface/IProduct';
+import { Models } from '../types/models';
 
 class Product extends Model<IProduct> implements IProduct{
   public id?: number | undefined;
@@ -8,6 +9,12 @@ class Product extends Model<IProduct> implements IProduct{
   public preco!: number;
   public image!: string;
 
+  static associate(models: Models):void{
+    this.hasMany(models.OrderProduct, {
+      foreignKey: 'productId',
+      as: 'order_products'
+    })
+  }
 
   static initialize(sequelize: Sequelize){
     Product.init(

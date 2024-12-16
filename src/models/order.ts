@@ -13,6 +13,10 @@ class Order extends Model<IOrders> implements IOrders{
       foreignKey: 'userId',
       as: 'user'
     })
+    this.hasMany(models.OrderProduct, {
+      foreignKey: 'orderId',
+      as: 'order_products'
+    })
   }
 
   static initialize(sequelize: Sequelize){

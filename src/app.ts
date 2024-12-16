@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 
 import User from './models/user';
 import Product from './models/product';
+import OrderProduct from './models/orderProducts'
 
 import userRoute from './routes/userRoute';
 import productRoute from './routes/productRoute'
@@ -39,10 +40,13 @@ Product.initialize(sequelize)
 const models: Models = {
   User: User,
   Order: Order,
+  OrderProduct: OrderProduct,
+  Product: Product
 }
 
 User.associate(models)
 Order.associate(models)
+OrderProduct.associate(models)
 
 
 sequelize.authenticate()
