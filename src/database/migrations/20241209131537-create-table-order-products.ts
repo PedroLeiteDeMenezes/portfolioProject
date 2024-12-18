@@ -37,6 +37,11 @@ module.exports = {
         type: DataTypes.DECIMAL,
         allowNull: false
       },
+      total:{
+        type: DataTypes.DECIMAL,
+        allowNull: false,
+        defaultValue: 0
+      },
       createdAt: {
         type: DataTypes.DATE,
         allowNull: false,

@@ -9,6 +9,7 @@ import OrderProduct from './models/orderProducts'
 import userRoute from './routes/userRoute';
 import productRoute from './routes/productRoute'
 import orderRoute from './routes/orderRoute'
+import orderProductRoute from './routes/orderProductRoute'
 
 import {Models} from '../src/types/models'
 import Order from './models/order';
@@ -36,6 +37,7 @@ app.use(express.urlencoded({ extended: true }));
 User.initialize(sequelize);
 Order.initialize(sequelize)
 Product.initialize(sequelize)
+OrderProduct.initialize(sequelize)
 
 const models: Models = {
   User: User,
@@ -59,6 +61,7 @@ sequelize.authenticate()
 app.use('/users', userRoute)
 app.use('/product', productRoute)
 app.use('/order', orderRoute)
+app.use('/orderProduct', orderProductRoute)
 
 app.listen(PORT, () => {
   console.log(`Servidor escutando na porta ${PORT}`);

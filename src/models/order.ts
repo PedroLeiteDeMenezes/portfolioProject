@@ -15,7 +15,7 @@ class Order extends Model<IOrders> implements IOrders{
     })
     this.hasMany(models.OrderProduct, {
       foreignKey: 'orderId',
-      as: 'order_products'
+      as: 'order_product'
     })
   }
 

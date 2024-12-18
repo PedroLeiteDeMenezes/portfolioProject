@@ -4,4 +4,5 @@ export interface IOrdersProducts{
   productId:number
   quantity: number
   price: number
+  total: number
 }
