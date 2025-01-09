@@ -13,6 +13,14 @@ class OrderController{
         return res.status(400).json({error: 'user id invalido'})
       }
 
+      let totalPrice = 0
+      for(let i = 0; i< products.length; i++){
+        const product = await Product.findByPk(products[i].productId)
+        if(product){
+          totalPrice += product.preco * products[i].quantity
+        }
+      }
+
       if(!Array.isArray(products) || products.length === 0){
         return res.status(400).json({error: 'Lista de produtos invalida ou vazia'})
       }
@@ -28,7 +36,7 @@ class OrderController{
 
       const createOrder = await Order.create({
         userId: userId,
-        total_price: Number(total_price),
+        total_price: totalPrice,
         status: String(status)
       })
 
@@ -59,6 +67,8 @@ class OrderController{
       return res.status(400).json({error: error.message})
     }
   }
+
+  
 }
 
 export default OrderController

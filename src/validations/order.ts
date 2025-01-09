@@ -10,10 +10,10 @@ export default class validadeOrder{
       throw new Error('Usuario com esse id não existe no nosso banco de dados portanto não é possivel efetuar a criação do seu pedido');
     }
 
-    if(!data.total_price || typeof data.total_price !== 'number' || isNaN(data.total_price) || data.total_price <= 0 || data.total_price > 20000){
-      throw new Error('Preço inferido esta incorreto')
+    // if(!data.total_price || typeof data.total_price !== 'number' || isNaN(data.total_price) || data.total_price <= 0 || data.total_price > 20000){
+    //   throw new Error('Preço inferido esta incorreto')
       
-    }
+    // }
 
     if(!data.status || typeof data.status !== 'string' ||!['aberto', 'fechado', 'pendente'].includes(data.status.toLowerCase())){
       throw new Error('compra invalida!')
